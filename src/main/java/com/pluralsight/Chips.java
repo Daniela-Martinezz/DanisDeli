@@ -1,5 +1,6 @@
 package com.pluralsight;
 
-public class Chips extends MenuItems{
-    private String chipsType;
+public class Chips {
+    private String chipsSelect;
+    private double chipsPrice = 1.50;
 }

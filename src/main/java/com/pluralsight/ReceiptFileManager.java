@@ -17,7 +17,7 @@ public class ReceiptFileManager {
 
         File customerReceiptFile = new File(fileName);
 
-        //TODO: complete receipt format :)
+        //TODO: complete receipt format **MAKE IT NICER:)
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(customerReceiptFile))) {
             //details written to receipt
             writer.write("Receipt for your order:\n");

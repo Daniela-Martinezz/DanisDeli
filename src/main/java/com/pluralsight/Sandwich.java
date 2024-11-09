@@ -3,10 +3,10 @@ package com.pluralsight;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sandwich extends MenuItems{
+public class Sandwich {
     private String size;
     private String breadType;
-    private List<Toppings> toppings;
+    private List<Topping> toppings;
     private boolean toasted;
 
     public Sandwich(String size, String breadType, boolean toasted ) {
