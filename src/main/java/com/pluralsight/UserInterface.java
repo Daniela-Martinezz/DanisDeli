@@ -86,7 +86,7 @@ public class UserInterface {
 
         //Meat and cheese selections:
      System.out.println("\nSelect Meat: "); //TODO Depending on size, price changes
-     System.out.println("-Steak" + "\n-Ham" + "\n-Salami" + "\n-Roast Beef" + "\n-Chicken" + "\nBacon");
+     System.out.println("-Steak" + "\n-Ham" + "\n-Salami" + "\n-Roast Beef" + "\n-Chicken" + "\n-Bacon");
      String meatSelected = scanner.nextLine();
 
      System.out.println("Would you like to add extra meat (yes/no)");//TODO Extra meat fee, i wanna change menu to show the cost depending what size they choose
@@ -170,34 +170,43 @@ public class UserInterface {
     }
 
     public static void checkout(List<String> orderItems) {
-        boolean orderComplete = false;
-        while (!orderComplete) {
-            System.out.println("1) Confirm \n" +
-                    "2) Cancel \n");
-            int input = scanner.nextInt();
-
-            switch (input) {
-                case 1:
-                    confirmCheckout(orderItems);
-                    orderComplete = true;
-                    break;
-                case 0:
-                    orderItems.clear();
-                    orderComplete = true;
-                    break;
-                default:
-                    System.out.println("Invalid Input");
-            }
-        }
-    }
-
-    public static void confirmCheckout(List<String> orderItems) {
-        //EXPLAIN: this is where receipts are made:)
-        System.out.println("Your order: ");
+        System.out.println("Your order summary:");
         for (String item : orderItems) {
             System.out.println("- " + item);
         }
+        System.out.println("1) Confirm \n" + "2) Cancel \n");
+        int input = scanner.nextInt();
 
+            switch (input) {
+                case 1:
+                    ReceiptFileManager.customerReceipt(orderItems);
+                    System.out.println("Order confirmed. Receipt saved!");
+                    break;
+                case 0:
+                    orderItems.clear();
+                    System.out.println("Order Cancelled.");
+                    break;
+                default:
+                    System.out.println("Invalid Input");
+            } //TODO: Add checkout confirmation
+        }
 
-    }
+        public static double calculateTotal(List<String> orderItems) {
+        double total = 0.0;
+
+        //EXPLAIN: we use methods to build a total
+        for (String item : orderItems) {
+            if ((item.contains("Sandwich"))) {
+             //   total += getSandwichPrice(item); //FIXME
+            } else if (item.contains("Drink")) {
+               // total += getDrinkPrice(item); //FIXME
+
+            } else if (item.contains("Chips")) {
+                total += 1.50; //EXPLAIN: all chips are $2.50
+
+            }
+        }
+        return total;
+        }
+
 }

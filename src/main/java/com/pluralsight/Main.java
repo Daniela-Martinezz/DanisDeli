@@ -13,6 +13,9 @@ public class Main {
            fix display customer order (both format and when it appears)
 
 
+           //FIXME: add total, fix drink, fix format, fix cheese
+
+
         */
 
 

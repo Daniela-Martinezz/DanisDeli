@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ReceiptFileManager {
 
-    public void customerReceipt(List<String> orderItems) {
+    public static void customerReceipt(List<String> orderItems) {
         String timeNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss"));
         String fileName = "receipts/" + timeNow + ".txt"; //path for new file
 
@@ -20,17 +20,15 @@ public class ReceiptFileManager {
         //TODO: complete receipt format **MAKE IT NICER:)
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(customerReceiptFile))) {
             //details written to receipt
-            writer.write("Receipt for your order:\n");
-            writer.write("====================================\n");
-
-            //EXPLAIN: Adding order to new file
-
+            writer.write("==== Dani's Deli Order Receipt ====\n");
+            writer.write("Order Date: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "\n\n");
+            writer.write("Items Ordered:\n");
             for (String item : orderItems) {
-                writer.write(item + "\n");
+                writer.write("- " + item + "\n");
             }
+           // writer.write("\nTotal: $" + calculateTotal(orderItems) + "\n"); // add calculateTotal
             writer.write("====================================\n");
-            writer.write("Thank you for visiting Dani's Deli");
-            writer.write("Order placed: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "\n");
+            writer.write("Thank you for visiting Dani's Deli!\n");
 
             System.out.println("Receipt saved to: " + fileName);
 
