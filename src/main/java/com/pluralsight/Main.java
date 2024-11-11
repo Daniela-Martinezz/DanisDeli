@@ -9,11 +9,8 @@ public class Main {
           receive a bye message and their receipt is printed to our system.
           make sure receipt is printed as i noticed it wasn't.
 
-          TODO: fix receipt.
-           fix display customer order (both format and when it appears)
 
-
-           //FIXME: add total, fix drink, fix format, fix cheese
+//FIXME: totals are not showing up for drinks, it is case sensitive.
 
 
         */

@@ -3,7 +3,7 @@ package com.pluralsight;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sandwich {
+public class Sandwich implements MenuItem {
    //Attributes
     private String breadType;
     private String size;
@@ -34,7 +34,8 @@ public class Sandwich {
         sauces.add(sauce);
     }
     //Cost of a sandwich per size
-    public double calculateCost() {
+    @Override
+    public double getPrice() {
         double baseCost = 0.0;
 
         switch (size) {
@@ -66,4 +67,19 @@ public class Sandwich {
         return baseCost;
     }
 
+
+    @Override
+    public String getDescription() {
+        return "Sandwich - " + size + " " + breadType +
+        " with " + meat + " and " + cheese; //new: need for this idk?
+    }
+    @Override
+    public String toString() {
+        return "Sandwich\nBread: " + breadType +
+                "\nSize: " + size +
+                "\nMeat: " + meat + (extraMeat ? "extra" : "") +
+                "\nCheese: " + cheese + (extraCheese ? "extra" : "") + //Explain: condition ? valueIfTrue : valueIfFalse
+                "\nToppings: " + String.join(", ", toppings) +
+                "\nSauces: " + String.join(", ", sauces);
+    }
 }

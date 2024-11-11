@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ReceiptFileManager {
 
-    public static void customerReceipt(List<String> orderItems) {
+    public static void customerReceipt(List<MenuItem> orderItems) {
         String timeNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss"));
         String fileName = "receipts/" + timeNow + ".txt"; //path for new file
 
@@ -23,12 +23,15 @@ public class ReceiptFileManager {
             writer.write("==== Dani's Deli Order Receipt ====\n");
             writer.write("Order Date: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "\n\n");
             writer.write("Items Ordered:\n");
-            for (String item : orderItems) {
+            for (MenuItem item : orderItems) {
                 writer.write("- " + item + "\n");
             }
-           // writer.write("\nTotal: $" + calculateTotal(orderItems) + "\n"); // add calculateTotal
+            double total = UserInterface.calculateTotal(orderItems);
+            System.out.println("Total: " + total); //FIXME
+           // writer.write("\nTotal: $" + String.format();
             writer.write("====================================\n");
             writer.write("Thank you for visiting Dani's Deli!\n");
+
 
             System.out.println("Receipt saved to: " + fileName);
 
