@@ -9,6 +9,12 @@ public class Chips implements MenuItem {
         this.chipsFlavor = chipsFlavor;
         this.chipsPrice = 1.50;
     }
+    //enum:
+    public enum chipTypes{
+       hot_cheetos, cheetos, jalapeno, lays, doritos,
+        bbq
+
+    }
 
     public String getChipsFlavor() {
         return chipsFlavor;
@@ -29,7 +35,7 @@ public class Chips implements MenuItem {
     }
     @Override
     public String toString() {
-        return "Chips\nFlavor: " + chipsFlavor;
+        return "Chips - Flavor: " + chipsFlavor;
     }
 }
 

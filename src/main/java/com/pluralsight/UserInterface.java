@@ -1,4 +1,5 @@
 package com.pluralsight;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -6,7 +7,6 @@ import java.util.Scanner;
 public class UserInterface {
     static Scanner scanner = new Scanner(System.in);
     static boolean exit = false;
-   // static List<MenuItem> orderItems = new ArrayList<>();
 
     public static void display() {
         while (!exit) {
@@ -73,28 +73,60 @@ public class UserInterface {
     }
  }
  public static Sandwich customizeSandwich() {
-     System.out.println("Select your bread: ");
-     System.out.println("-White\n-Wheat\n-Rye\n-Wrap");
-     String breadType = scanner.nextLine();
 
-     System.out.println("\nSelect Size: ");
-     System.out.println("-4\"\n-8\"\n-12\"");
-     String sizeChosen = scanner.nextLine();
+        //new: Making sure user chooses only items from menu
+    Sandwich.Bread breadType = null;
+    while (breadType == null) {
+        System.out.println("Select your bread: ");
+        System.out.println("-White\n-Wheat\n-Rye\n-Wrap");
+        try {
+            breadType = Sandwich.Bread.valueOf(scanner.nextLine().toUpperCase().trim());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid bread type, please try again.");
+        }
+    }
+
+    Sandwich.Size sizeChosen = null;
+    while (sizeChosen == null) {
+        System.out.println("Select Size: 4\", 8\", 12\"");
+        System.out.println("\n-Small -Medium -Large");
+        try {
+            sizeChosen = Sandwich.Size.valueOf(scanner.nextLine().toUpperCase().trim());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid size, please try again.");
+        }
+    }
+
 
      System.out.println("Would you like your sandwich toasted? (yes/no)");
      boolean isToasted = scanner.nextLine().equalsIgnoreCase("yes");
 
-        //Meat and cheese selections:
+        //Meat selection:
+     Sandwich.Meat meatSelected = null;
+     while (meatSelected == null) {
      System.out.println("\nSelect Meat: "); //TODO Depending on size, price changes
      System.out.println("-Steak\n-Ham\n-Salami\n-Roast Beef\n-Chicken\n-Bacon");
-     String meatSelected = scanner.nextLine();
+       try{
+           meatSelected = Sandwich.Meat.valueOf(scanner.nextLine().toUpperCase().trim());
+       } catch (IllegalArgumentException e) {
+           System.out.println("Invalid meat selection, please try again.");
+       }
+     }
 
      System.out.println("Would you like to add extra meat (yes/no)");//TODO Extra meat fee, i wanna change menu to show the cost depending what size they choose
      boolean extraMeat = scanner.nextLine().equalsIgnoreCase("yes");
 
-     System.out.println("Select Cheese: ");
-     System.out.println("-American" + "\n-Provolone" + "\n-Cheddar" + "\n-Swiss");
-     String cheeseSelected = scanner.nextLine();
+     //Cheese selection
+     Sandwich.Cheese cheeseSelected = null;
+     while (cheeseSelected == null) {
+         System.out.println("Select Cheese: ");
+         System.out.println("-American" + "\n-Provolone" + "\n-Cheddar" + "\n-Swiss");
+         try {
+             cheeseSelected = Sandwich.Cheese.valueOf(scanner.nextLine().toUpperCase().trim());
+         } catch (IllegalArgumentException e) {
+             System.out.println("Invalid cheese selected. Please try again.");
+         }
+     }
 
      System.out.println("Would you like to add extra cheese (yes/no)");
      boolean extraCheese = scanner.nextLine().equalsIgnoreCase("yes");
@@ -108,7 +140,7 @@ public class UserInterface {
                  "\n•Lettuce  •Peppers  •Onions" +
                  "\n•Tomatoes •Jalapeños •Cucumbers" +
                  "\n•Pickles  •Guacamole •Mushrooms");
-         topping = scanner.nextLine();
+         topping = scanner.nextLine().toUpperCase().trim();
 
          if (!topping.equalsIgnoreCase("done")) {
              selectedToppings.add(topping);
@@ -123,7 +155,7 @@ public class UserInterface {
              System.out.println("Sauces:" +
                      "\n•Mayo  •Mustard  •Ketchup" +
                      "\n•Ranch •Thousand Islands •Vinaigrette");
-             sauce = scanner.nextLine();
+             sauce = scanner.nextLine().toUpperCase().trim();
 
              if (!sauce.equalsIgnoreCase("done")) {
                  selectedSauces.add(sauce);
@@ -131,8 +163,19 @@ public class UserInterface {
              }
          } while (!sauce.equalsIgnoreCase("done"));
 
+     Sandwich.Sides sides = null;
+     while (sides == null) {
+         System.out.println("Choose any sides: ");
+         System.out.println("-Au Jus   -Sauce");
+         try {
+             sides = Sandwich.Sides.valueOf(scanner.nextLine().toUpperCase().trim());
+         } catch (IllegalArgumentException e) { //new: why does IOEXEPTION NW, LEARN DIFF**
+             System.out.println("Invalid side choice, please try again.");
+         }
+     }
+
      // Create the Sandwich object
-     Sandwich sandwich = new Sandwich(breadType, sizeChosen, isToasted, meatSelected, extraMeat, cheeseSelected, extraCheese);
+     Sandwich sandwich = new Sandwich(breadType, sizeChosen, isToasted, meatSelected, extraMeat, cheeseSelected, extraCheese, sides);
      for (String t : selectedToppings) sandwich.addTopping(t);
      for (String s : selectedSauces) sandwich.addSauce(s);
 
@@ -142,9 +185,9 @@ public class UserInterface {
     public static Chips chipsChosen() {
         System.out.println("Select chips for $1.50: ");
         System.out.println("Chips:" +
-                "\n•Hot Cheetos  •Cheetos  •Jalapeño" +
+                "\n•Hot Cheetos  •Cheetos  •Jalapeno" +
                 "\n•Lays •Doritos •BBQ");
-        String chipsFlavor = scanner.nextLine().toLowerCase(); //avoiding case sensitivity
+        String chipsFlavor = scanner.nextLine().toUpperCase().trim(); //avoiding case sensitivity
 
         //**chip object for flavor
         Chips chips = new Chips(chipsFlavor);
@@ -156,16 +199,16 @@ public class UserInterface {
     }
     public static Drink drinkChosen() {
         System.out.println("Select size for drink: ");
-        System.out.println("• Small - $2.00" +
-                "\n• Medium - $2.50" +
-                "\n• Large - $3.00");
-        String drinkSize = scanner.nextLine().toLowerCase(); //1st get size
+        System.out.println("• S - $2.00" +
+                "\n• M - $2.50" +
+                "\n• L - $3.00");
+        String drinkSize = scanner.nextLine().toUpperCase().trim(); //1st get size
 
         System.out.println("Select drink flavor: ");
         System.out.println("Drinks:" +
                 "\n•Coca Cola  •Sprite  •Crush" +
                 "\n•Ginger Ale •Gatorade •Iced Tea");
-        String drinkFlavor = scanner.nextLine(); //2nd get flavor
+        String drinkFlavor = scanner.nextLine().toUpperCase().trim(); //2nd get flavor
 
         Drink drink = new Drink(drinkSize, drinkFlavor); //creating object
 
@@ -174,9 +217,9 @@ public class UserInterface {
 
     public static void checkout(List<MenuItem> orderItems) {
         System.out.println("Your order summary:");
-        for (MenuItem item : orderItems) {
+        for (MenuItem item : orderItems) { //loop to show everything purchased
             System.out.println("- " + item);
-            System.out.println(calculateTotal(orderItems));
+            System.out.println("$" + calculateTotal(orderItems));
         }
         System.out.println("1) Confirm \n" + "2) Cancel \n");
         int input = scanner.nextInt();

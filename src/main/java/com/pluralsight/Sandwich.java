@@ -4,26 +4,63 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Sandwich implements MenuItem {
+    //ENUMS:
+    public enum Bread{
+        WHITE, WHEAT, RYE, WRAP
+    }
+    public enum Size{ //ensuring price can be reached in other classes
+        SMALL(4.50), MEDIUM(7.00), LARGE(8.50);
+
+        private double price;
+
+        Size(double price) {
+            this.price = price;
+
+        }
+        public double getBasePrice() {
+            return price;
+        }
+    }
+    public enum Meat{
+        STEAK, HAM, SALAMI, ROAST_BEEF, CHICKEN, BACON
+    }
+    public enum Cheese{
+        AMERICAN, PROVOLONE, CHEDDAR, SWISS
+    }
+    public enum Toppings{
+        LETTUCE, PEPPERS, ONIONS, TOMATOES, JALAPENOS, CUCUMBERS,
+        PICKLES, GUACAMOLE, MUSHROOMS
+    }
+    public enum Sauce{
+        MAYO, MUSTARD, KETCHUP, RANCH,
+        THOUSAND_ISLANDS, VINAIGRETTE
+    }
+    public enum Sides{
+        AU_JUS, SAUCE //TODO implement sides to sandwich
+    }
+
    //Attributes
-    private String breadType;
-    private String size;
+    private Bread breadType;
+    private Size sizeChosen;
     private boolean isToasted;
-    private String meat;
+    private Meat meatSelected;
     private boolean extraMeat;
-    private String cheese;
+    private Cheese cheeseSelected;
     private boolean extraCheese;
+    private Sides sides;
     private List<String> toppings;
     private List<String> sauces;
 
     //Constructor
-    public Sandwich(String breadType, String size, boolean isToasted, String meat, boolean extraMeat, String cheese, boolean extraCheese) {
+    public Sandwich(Bread breadType, Size sizeChosen, boolean isToasted, Meat meatSelected, boolean extraMeat, Cheese cheeseSelected, boolean extraCheese, Sides sides) {
         this.breadType = breadType;
-        this.size = size;
+        this.sizeChosen = sizeChosen;
         this.isToasted = isToasted;
-        this.meat = meat;
+        this.meatSelected = meatSelected;
         this.extraMeat = extraMeat;
-        this.cheese = cheese;
+        this.cheeseSelected = cheeseSelected;
         this.extraCheese = extraCheese;
+        this.sides = sides;
         this.toppings = new ArrayList<>();
         this.sauces = new ArrayList<>();
     }
@@ -36,25 +73,22 @@ public class Sandwich implements MenuItem {
     //Cost of a sandwich per size
     @Override
     public double getPrice() {
-        double baseCost = 0.0;
+        double baseCost = sizeChosen.getBasePrice(); //using enums price
 
-        switch (size) {
-            case "4\"":
-                baseCost = 5.50;
+        switch (sizeChosen) {
+            case SMALL:
                 baseCost += 1.00; //meat
                 baseCost += 0.75; //cheese
                 if (extraMeat) baseCost += 0.50;
                 if (extraCheese) baseCost += 0.30; //In case user adds extra on 4"
                 break;
-            case "8\"":
-                baseCost = 7.00;
+            case MEDIUM:
                 baseCost += 2.00; //meat
                 baseCost += 1.50; //cheese
                 if (extraMeat) baseCost += 1.00;
                 if (extraCheese) baseCost += .60;
                 break;
-            case "12\"":
-                baseCost = 8.50;
+            case LARGE:
                 baseCost += 3.00; //meat
                 baseCost += 2.25; //cheese
                 if (extraMeat) baseCost += 1.50;
@@ -62,7 +96,7 @@ public class Sandwich implements MenuItem {
                 break;
             default:
                 System.out.println("Invalid size selected.");
-
+                break;
         }
         return baseCost;
     }
@@ -70,16 +104,18 @@ public class Sandwich implements MenuItem {
 
     @Override
     public String getDescription() {
-        return "Sandwich - " + size + " " + breadType +
-        " with " + meat + " and " + cheese; //new: need for this idk?
+        return "Sandwich - " + sizeChosen + " " + breadType +
+        " with " + meatSelected + " and " + cheeseSelected; //new: need for this idk?
     }
+
     @Override
     public String toString() {
-        return "Sandwich\nBread: " + breadType +
-                "\nSize: " + size +
-                "\nMeat: " + meat + (extraMeat ? "extra" : "") +
-                "\nCheese: " + cheese + (extraCheese ? "extra" : "") + //Explain: condition ? valueIfTrue : valueIfFalse
-                "\nToppings: " + String.join(", ", toppings) +
-                "\nSauces: " + String.join(", ", sauces);
+        return "Sandwich - Bread: " + breadType + ", " +
+                 " Size: " + sizeChosen + ", " +
+                " Meat: " + meatSelected + (extraMeat ? " (extra)" : "") + ", " +
+                " Cheese: " + cheeseSelected + (extraCheese ? " (extra)" : "") + ", " + //Explain: condition ? valueIfTrue : valueIfFalse
+                " Toppings: " + String.join(", ", toppings) + ", " +
+                " Sauces: " + String.join(", ", sauces) + ", " +
+                " Sides: " + sides;
     }
 }

@@ -11,6 +11,13 @@ public class Drink implements MenuItem {
         this.flavor = flavor;
 
     }
+    //enum
+    public enum drinkFlavors{
+        COCA_COLA, SPRITE, CRUSH, GINGER_ALE, GATORADE, ICED_TEA
+    }
+    public enum drinkSizesType{
+        S, M, L
+    }
     @Override
     public double getPrice() {
         double drinkCost = 0.0;
@@ -36,7 +43,7 @@ public class Drink implements MenuItem {
     }
     @Override
     public String toString() {
-        return "Soda\nSize: " +
-                size + "\nType: " + flavor;
+        return "Soda - Size: " +
+                size + "," + "Flavor: : " + flavor;
     }
 }
