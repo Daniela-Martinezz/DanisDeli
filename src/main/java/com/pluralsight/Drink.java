@@ -1,49 +1,46 @@
 package com.pluralsight;
 
 public class Drink implements MenuItem {
-    //Attributes
-    private String size;
-    private String flavor;
+    //Attributes w/ enums
+    private DrinkSize size;
+    private DrinkFlavors flavor;
 
-    //Constructor
-    public Drink(String size, String flavor) {
+    //enum for drink flavors:
+    public enum DrinkFlavors{
+        COCA_COLA, SPRITE, CRUSH, GINGER_ALE, GATORADE, ICED_TEA
+    }
+    //enum for drink sizes with prices
+    public enum DrinkSize{
+        S(2.00), M(2.50), L(3.00);
+
+        private double price;
+
+        DrinkSize(double price) {
+            this.price = price;
+
+        }
+        public double getPrice() {
+            return price;
+        }
+    }
+    //Constructor w/ enums
+    public Drink(DrinkSize size, DrinkFlavors flavor) {
         this.size = size;
         this.flavor = flavor;
 
     }
-    //enum
-    public enum drinkFlavors{
-        COCA_COLA, SPRITE, CRUSH, GINGER_ALE, GATORADE, ICED_TEA
-    }
-    public enum drinkSizesType{
-        S, M, L
-    }
+    //using method from DrinkSize
     @Override
     public double getPrice() {
-        double drinkCost = 0.0;
-
-        switch (size) {
-            case "small":
-                drinkCost = 2.00;
-                break;
-            case "medium":
-                drinkCost = 2.50;
-                break;
-            case "large":
-                drinkCost = 3.00;
-                break;
-        }
-        return drinkCost;
+        return size.getPrice();
     }
-
+    //using enum values
     @Override
     public String getDescription() {
-        return "Soda\nSize: " +
-                size + "\nType: " + flavor;
+        return "Soda\nSize: " + size + "\nType: " + flavor;
     }
     @Override
     public String toString() {
-        return "Soda - Size: " +
-                size + "," + "Flavor: : " + flavor;
+        return "Soda - Size: " + size + "," + "Flavor: : " + flavor;
     }
 }

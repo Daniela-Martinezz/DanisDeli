@@ -183,38 +183,57 @@ public class UserInterface {
 
  }
     public static Chips chipsChosen() {
-        System.out.println("Select chips for $1.50: ");
-        System.out.println("Chips:" +
-                "\n•Hot Cheetos  •Cheetos  •Jalapeno" +
-                "\n•Lays •Doritos •BBQ");
-        String chipsFlavor = scanner.nextLine().toUpperCase().trim(); //avoiding case sensitivity
+        Chips.ChipFlavor chipFlavor = null;
+        while (chipFlavor == null) {
+            System.out.println("Select chips for $1.50: ");
+            System.out.println("Chips:" +
+                    "\n•Hot Cheetos •Cheetos  •Jalapeno" +
+                    "\n•Lays •Doritos •BBQ");
 
-        //**chip object for flavor
-        Chips chips = new Chips(chipsFlavor);
+            String input = scanner.nextLine().toUpperCase().replace(" ", "_"); //new: For the enums to be read properly.
 
-        //Returning chips
+            try {
+                chipFlavor = Chips.ChipFlavor.valueOf(input);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid chip flavor selected. Please try again.");
+            }
+        }
+        Chips chips = new Chips(chipFlavor);
         return chips;
-//new: Testing
-
     }
     public static Drink drinkChosen() {
-        System.out.println("Select size for drink: ");
-        System.out.println("• S - $2.00" +
-                "\n• M - $2.50" +
-                "\n• L - $3.00");
-        String drinkSize = scanner.nextLine().toUpperCase().trim(); //1st get size
+        Drink.DrinkSize drinkSize = null;
+        while (drinkSize == null) {
+            System.out.println("Select size for drink: ");
+            System.out.println("• S - $2.00" +
+                    "\n• M - $2.50" +
+                    "\n• L - $3.00");
 
-        System.out.println("Select drink flavor: ");
-        System.out.println("Drinks:" +
-                "\n•Coca Cola  •Sprite  •Crush" +
-                "\n•Ginger Ale •Gatorade •Iced Tea");
-        String drinkFlavor = scanner.nextLine().toUpperCase().trim(); //2nd get flavor
+            String input = scanner.nextLine().toUpperCase().replace(" ", "_"); //new: same as for chips. :)
 
-        Drink drink = new Drink(drinkSize, drinkFlavor); //creating object
+            try {
+                drinkSize = Drink.DrinkSize.valueOf(input);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid size selected. Please try again.");
+            }
+        }
 
+        Drink.DrinkFlavors drinkFlavors = null;
+        while (drinkFlavors == null) {
+            System.out.println("Select drink flavor: ");
+            System.out.println("Drinks:" +
+                    "\n•Coca Cola  •Sprite  •Crush" +
+                    "\n•Ginger Ale •Gatorade •Iced Tea");
+            try {
+                drinkFlavors = Drink.DrinkFlavors.valueOf(scanner.nextLine().toUpperCase().trim());
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid drink flavor selected. Please try again");
+            }
+
+        }
+        Drink drink = new Drink(drinkSize, drinkFlavors);
         return drink;
     }
-
     public static void checkout(List<MenuItem> orderItems) {
         System.out.println("Your order summary:");
         for (MenuItem item : orderItems) { //loop to show everything purchased

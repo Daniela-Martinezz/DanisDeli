@@ -2,28 +2,17 @@ package com.pluralsight;
 
 public class Chips implements MenuItem {
     //Attributes
-    private String chipsFlavor;
-    private double chipsPrice;
+    private ChipFlavor chipsFlavor;
+    private double chipsPrice = 1.50;
 
-    public Chips(String chipsFlavor) {
+    //enum for chips:
+    public enum ChipFlavor {
+        HOT_CHEETOS, CHEETOS, JALAPENO, LAYS, DORITOS,
+        BBQ
+    }
+    public Chips(ChipFlavor chipsFlavor) {
         this.chipsFlavor = chipsFlavor;
-        this.chipsPrice = 1.50;
     }
-    //enum:
-    public enum chipTypes{
-       hot_cheetos, cheetos, jalapeno, lays, doritos,
-        bbq
-
-    }
-
-    public String getChipsFlavor() {
-        return chipsFlavor;
-    }
-
-    public double getChipsPrice() {
-        return chipsPrice;
-    }
-
     @Override
     public double getPrice() {
         return chipsPrice;
