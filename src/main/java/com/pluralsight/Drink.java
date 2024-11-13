@@ -41,6 +41,6 @@ public class Drink implements MenuItem {
     }
     @Override
     public String toString() {
-        return "Soda - Size: " + size + "," + "Flavor: : " + flavor;
+        return "Soda - Size: " + size + "," + " Flavor: : " + flavor;
     }
 }

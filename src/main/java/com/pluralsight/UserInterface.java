@@ -88,8 +88,8 @@ public class UserInterface {
 
     Sandwich.Size sizeChosen = null;
     while (sizeChosen == null) {
-        System.out.println("Select Size: 4\", 8\", 12\"");
-        System.out.println("\n-Small -Medium -Large");
+        System.out.println("Select Size: ");
+        System.out.println("-Small(4\") -Medium(8\") -Large(12\"");
         try {
             sizeChosen = Sandwich.Size.valueOf(scanner.nextLine().toUpperCase().trim());
         } catch (IllegalArgumentException e) {
@@ -165,10 +165,12 @@ public class UserInterface {
 
      Sandwich.Sides sides = null;
      while (sides == null) {
-         System.out.println("Choose any sides: ");
+         System.out.println("Choose a side: ");
          System.out.println("-Au Jus   -Sauce");
+
+         String input = scanner.nextLine().toUpperCase().replace(" ", "_");
          try {
-             sides = Sandwich.Sides.valueOf(scanner.nextLine().toUpperCase().trim());
+             sides = Sandwich.Sides.valueOf(input);
          } catch (IllegalArgumentException e) { //new: why does IOEXEPTION NW, LEARN DIFF**
              System.out.println("Invalid side choice, please try again.");
          }
@@ -209,10 +211,8 @@ public class UserInterface {
                     "\n• M - $2.50" +
                     "\n• L - $3.00");
 
-            String input = scanner.nextLine().toUpperCase().replace(" ", "_"); //new: same as for chips. :)
-
             try {
-                drinkSize = Drink.DrinkSize.valueOf(input);
+                drinkSize = Drink.DrinkSize.valueOf(scanner.nextLine().toUpperCase().trim());
             } catch (IllegalArgumentException e) {
                 System.out.println("Invalid size selected. Please try again.");
             }
@@ -224,8 +224,11 @@ public class UserInterface {
             System.out.println("Drinks:" +
                     "\n•Coca Cola  •Sprite  •Crush" +
                     "\n•Ginger Ale •Gatorade •Iced Tea");
+
+            String input = scanner.nextLine().toUpperCase().replace(" ", "_");
+
             try {
-                drinkFlavors = Drink.DrinkFlavors.valueOf(scanner.nextLine().toUpperCase().trim());
+                drinkFlavors = Drink.DrinkFlavors.valueOf(input);
             } catch (IllegalArgumentException e) {
                 System.out.println("Invalid drink flavor selected. Please try again");
             }
@@ -237,9 +240,9 @@ public class UserInterface {
     public static void checkout(List<MenuItem> orderItems) {
         System.out.println("Your order summary:");
         for (MenuItem item : orderItems) { //loop to show everything purchased
-            System.out.println("- " + item);
-            System.out.println("$" + calculateTotal(orderItems));
+            System.out.println(item);
         }
+        System.out.println("$" + calculateTotal(orderItems));
         System.out.println("1) Confirm \n" + "2) Cancel \n");
         int input = scanner.nextInt();
         scanner.nextLine();

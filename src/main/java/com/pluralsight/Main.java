@@ -4,8 +4,11 @@ public class Main {
     public static void main(String[] args) {
        UserInterface.display();
 
-/*TODO: Complete enums for Drinks and Chips.
-   Fix toppings and sauces enum.
+/*TODO:
+        fix COCA_COLA formatting given after checkout on receipt. i want it to print as COCA COLA.
+        fix receipt, make it cleaner.
+        fix toppings + sauces to work with enums
+
 
  */
 

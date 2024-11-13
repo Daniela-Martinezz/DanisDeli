@@ -19,15 +19,19 @@ public class ReceiptFileManager {
         //TODO: complete receipt format **MAKE IT NICER:)
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(customerReceiptFile))) {
             //details written to receipt
-            writer.write("==== Dani's Deli Order Receipt ====\n");
-            writer.write("Order Date: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "\n\n");
+            writer.write("========================================\n");
+            writer.write("        *** Dani's Deli ***\n");
+            writer.write("           Order Receipt\n");
+            writer.write("========================================\n");
+
+            writer.write("Order Date: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "\n");
+            writer.write("========================================\n");
             writer.write("Items Ordered:\n");
             for (MenuItem item : orderItems) {
-                writer.write("- " + item + "\n");
+                writer.write( item + "\n");
             }
             double total = UserInterface.calculateTotal(orderItems);
-            System.out.println("Total: " + total); //FIXME
-           // writer.write("\nTotal: $" + String.format();
+            writer.write("\nTotal: $" + String.format("%.2f", total) + "\n");
             writer.write("====================================\n");
             writer.write("Thank you for visiting Dani's Deli!\n");
 
