@@ -7,6 +7,13 @@ import java.util.Scanner;
 public class UserInterface {
     static Scanner scanner = new Scanner(System.in);
     static boolean exit = false;
+    private static List<String> toppingMenu = List.of( //what is list.of?
+            "LETTUCE", "PEPPERS", "ONIONS", "TOMATOES", "JALAPENOS", "CUCUMBERS",
+            "PICKLES", "GUACAMOLE", "MUSHROOMS"
+    );
+    private static List<String> sauceMenu = List.of(
+            "MAYO", "MUSTARD", "KETCHUP", "RANCH", "THOUSAND ISLANDS", "VINAIGRETTE"
+    );
 
     public static void display() {
         while (!exit) {
@@ -74,7 +81,7 @@ public class UserInterface {
  }
  public static Sandwich customizeSandwich() {
 
-        //new: Making sure user chooses only items from menu
+    //Step 1: select bread type. * Sandwich.Bread is enum from sandwich class
     Sandwich.Bread breadType = null;
     while (breadType == null) {
         System.out.println("Select your bread: ");
@@ -86,10 +93,11 @@ public class UserInterface {
         }
     }
 
+    //Step 2: selecting sandwich size
     Sandwich.Size sizeChosen = null;
     while (sizeChosen == null) {
         System.out.println("Select Size: ");
-        System.out.println("-Small(4\") -Medium(8\") -Large(12\"");
+        System.out.println("-S (4\")\n-M (8\")\n-L (12\")");
         try {
             sizeChosen = Sandwich.Size.valueOf(scanner.nextLine().toUpperCase().trim());
         } catch (IllegalArgumentException e) {
@@ -98,10 +106,11 @@ public class UserInterface {
     }
 
 
+    //Step 3: toasted or not?
      System.out.println("Would you like your sandwich toasted? (yes/no)");
      boolean isToasted = scanner.nextLine().equalsIgnoreCase("yes");
 
-        //Meat selection:
+     //Step 4: select meat
      Sandwich.Meat meatSelected = null;
      while (meatSelected == null) {
      System.out.println("\nSelect Meat: "); //TODO Depending on size, price changes
@@ -113,10 +122,11 @@ public class UserInterface {
        }
      }
 
+     //Step 5: extra meat?
      System.out.println("Would you like to add extra meat (yes/no)");//TODO Extra meat fee, i wanna change menu to show the cost depending what size they choose
      boolean extraMeat = scanner.nextLine().equalsIgnoreCase("yes");
 
-     //Cheese selection
+     //Step 6: Select cheese!
      Sandwich.Cheese cheeseSelected = null;
      while (cheeseSelected == null) {
          System.out.println("Select Cheese: ");
@@ -127,62 +137,78 @@ public class UserInterface {
              System.out.println("Invalid cheese selected. Please try again.");
          }
      }
-
+     //Step 7: extra cheese?
      System.out.println("Would you like to add extra cheese (yes/no)");
      boolean extraCheese = scanner.nextLine().equalsIgnoreCase("yes");
 
-     List<String> selectedToppings = new ArrayList<>();
-     System.out.println("Choose your toppings (type \"done\" when finished): ");
-     String topping;
+     //Step 8: Topping selection:
+     List<String> selectedToppings = new ArrayList<>(); //list to store selected toppings
+     boolean addingToppings = true;
 
-     do {
-         System.out.println("Toppings:" +
-                 "\n•Lettuce  •Peppers  •Onions" +
-                 "\n•Tomatoes •Jalapeños •Cucumbers" +
-                 "\n•Pickles  •Guacamole •Mushrooms");
-         topping = scanner.nextLine().toUpperCase().trim();
+     System.out.println("Topping Selection: ");
+     for (int i = 0; i < toppingMenu.size(); i++) {
+         System.out.println((i + 1) + ". " + toppingMenu.get(i));
+     }
+     //SELECT:
+     while (addingToppings) {
+         System.out.println("Enter the number of the topping you'd like to add (or 0 to finish): ");
+         int toppingChoice = scanner.nextInt();
+         scanner.nextLine();
 
-         if (!topping.equalsIgnoreCase("done")) {
+         if (toppingChoice == 0){
+             //finished adding toppings
+             addingToppings = false;
+         } else if (toppingChoice > 0 && toppingChoice <= toppingMenu.size()) {
+             //valid choice
+             String topping = toppingMenu.get(toppingChoice - 1);
              selectedToppings.add(topping);
-         }
-     } while (!topping.equalsIgnoreCase("done")); //will run until user types done
-
-         List<String> selectedSauces = new ArrayList<>();
-         System.out.println("Choose your sauces (type \"done\" when finished): ");
-         String sauce;
-
-         do {
-             System.out.println("Sauces:" +
-                     "\n•Mayo  •Mustard  •Ketchup" +
-                     "\n•Ranch •Thousand Islands •Vinaigrette");
-             sauce = scanner.nextLine().toUpperCase().trim();
-
-             if (!sauce.equalsIgnoreCase("done")) {
-                 selectedSauces.add(sauce);
-
-             }
-         } while (!sauce.equalsIgnoreCase("done"));
-
-     Sandwich.Sides sides = null;
-     while (sides == null) {
-         System.out.println("Choose a side: ");
-         System.out.println("-Au Jus   -Sauce");
-
-         String input = scanner.nextLine().toUpperCase().replace(" ", "_");
-         try {
-             sides = Sandwich.Sides.valueOf(input);
-         } catch (IllegalArgumentException e) { //new: why does IOEXEPTION NW, LEARN DIFF**
-             System.out.println("Invalid side choice, please try again.");
+             System.out.println(topping + " added to your sandwich.");
+         } else {
+             //invalid input
+             System.out.println("Invalid choice. Please choose a valid topping number.");
          }
      }
 
+     //Step 9: sauce selection:
+     List<String> selectedSauces = new ArrayList<>();
+     boolean addingSauces = true;
+     System.out.println("Sauce Selection: ");
+     for (int i = 0; i < sauceMenu.size(); i++) {
+         System.out.println((i + 1) + ". " + sauceMenu.get(i));
+     }
+     while (addingSauces) {
+         System.out.println("Enter the number of the sauce you'd like to add (or 0 to finish): ");
+         int sauceChoice = scanner.nextInt();
+         scanner.nextLine();
+
+         if (sauceChoice == 0) {
+             addingSauces = false; //completed adding sauces
+         } else if (sauceChoice > 0 && sauceChoice <= sauceMenu.size()) {
+             String sauce = sauceMenu.get(sauceChoice - 1);
+             selectedSauces.add(sauce);
+             System.out.println(sauce + " added to your sandwich.");
+         } else {
+             System.out.println("Invalid choice. Please choose a valid sauce number.");
+
+         }
+     }
+     Sandwich.Sides sides = null;
+     while (sides == null) {
+         System.out.println("Choose a side: ");
+         System.out.println("-Au Jus\n-Sauce");
+
+         String input = scanner.nextLine().toUpperCase().replace(" ", "_");
+
+         try {
+             sides = Sandwich.Sides.valueOf(input);
+         } catch (IllegalArgumentException e) {
+             System.out.println("Invalid side choice, please try again.");
+         }
+     }
      // Create the Sandwich object
-     Sandwich sandwich = new Sandwich(breadType, sizeChosen, isToasted, meatSelected, extraMeat, cheeseSelected, extraCheese, sides);
-     for (String t : selectedToppings) sandwich.addTopping(t);
-     for (String s : selectedSauces) sandwich.addSauce(s);
+     Sandwich sandwich = new Sandwich(breadType, sizeChosen, isToasted, meatSelected, extraMeat, cheeseSelected, extraCheese, sides, selectedToppings, selectedSauces);
 
      return sandwich;
-
  }
     public static Chips chipsChosen() {
         Chips.ChipFlavor chipFlavor = null;

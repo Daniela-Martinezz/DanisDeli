@@ -9,8 +9,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class ReceiptFileManager {
-
+        //bringing in menuItems as a list to create a receipt from orderItems.
     public static void customerReceipt(List<MenuItem> orderItems) {
+        //creating date and time format which will also be used for the file name
         String timeNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss"));
         String fileName = "receipts/" + timeNow + ".txt"; //path for new file
 
@@ -28,7 +29,7 @@ public class ReceiptFileManager {
             writer.write("========================================\n");
             writer.write("Items Ordered:\n");
             for (MenuItem item : orderItems) {
-                writer.write( item + "\n");
+                writer.write( item + "\n\n");
             }
             double total = UserInterface.calculateTotal(orderItems);
             writer.write("\nTotal: $" + String.format("%.2f", total) + "\n");
