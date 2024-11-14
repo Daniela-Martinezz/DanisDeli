@@ -29,11 +29,13 @@ public class ReceiptFileManager {
             writer.write("========================================\n");
             writer.write("Items Ordered:\n");
             for (MenuItem item : orderItems) {
-                writer.write( item + "\n\n");
+                writer.write("\n" + item + "  (" + String.format("$%.2f", item.getPrice()) + ")" + "\n----------------------------------------");
+
+
             }
             double total = UserInterface.calculateTotal(orderItems);
-            writer.write("\nTotal: $" + String.format("%.2f", total) + "\n");
-            writer.write("====================================\n");
+            writer.write("\nTotal:                            " + "$" + String.format("%.2f", total) + "\n");
+            writer.write("========================================\n");
             writer.write("Thank you for visiting Dani's Deli!\n");
 
 

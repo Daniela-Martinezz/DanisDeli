@@ -1,5 +1,4 @@
 package com.pluralsight;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,7 +13,7 @@ public class UserInterface {
     private static List<String> sauceMenu = List.of(
             "MAYO", "MUSTARD", "KETCHUP", "RANCH", "THOUSAND ISLANDS", "VINAIGRETTE"
     );
-
+    //1st Menu:
     public static void display() {
         while (!exit) {
             System.out.println("Welcome to Dani's Deli!\n"+
@@ -41,7 +40,8 @@ public class UserInterface {
         boolean orderComplete = false;
 
         while (!orderComplete) {
-        System.out.println("1) Add Sandwich \n" +
+        System.out.println("Add item: \n" +
+                "1) Add Sandwich \n" +
                 "2) Add Drink\n" +
                 "3) Add Chips\n" +
                 "4) Checkout\n" +
@@ -70,7 +70,7 @@ public class UserInterface {
                 orderComplete = true;
                 break;
             case 0:
-                System.out.println("Order canceled.");
+                System.out.println("Order cancelled.");
                 orderItems.clear(); //EXPLAIN: clearing all items out of cart
                 orderComplete = true;
                 break;
@@ -266,9 +266,11 @@ public class UserInterface {
     public static void checkout(List<MenuItem> orderItems) {
         System.out.println("Your order summary:");
         for (MenuItem item : orderItems) { //loop to show everything purchased
-            System.out.println(item);
+            System.out.println(item + "  (" + String.format("$%.2f", item.getPrice()) +")");
+            System.out.println("----------------------------------------\n");
+
         }
-        System.out.println("$" + calculateTotal(orderItems));
+        System.out.println("Total: " + String.format("$%.2f", calculateTotal(orderItems)));
         System.out.println("1) Confirm \n" + "2) Cancel \n");
         int input = scanner.nextInt();
         scanner.nextLine();
@@ -284,7 +286,7 @@ public class UserInterface {
                     break;
                 default:
                     System.out.println("Invalid Input");
-            } //TODO: Add checkout confirmation
+            }
         }
 
         public static double calculateTotal(List<MenuItem> orderItems) {

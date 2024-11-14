@@ -121,12 +121,9 @@ public class Sandwich implements MenuItem {
 
     @Override
     public String toString() {
-        return "Sandwich - Bread: " + breadType + ", " +
-                 " Size: " + sizeChosen + ", " +
-                " Meat: " + meatSelected + (extraMeat ? " (extra)" : "") + ", " +
-                " Cheese: " + cheeseSelected + (extraCheese ? " (extra)" : "") + ", " + //Explain: condition ? valueIfTrue : valueIfFalse
-                " Toppings: " + String.join(", ", toppings) + ", " +
-                " Sauces: " + String.join(", ", sauces) + ", " +
-                " Sides: " + sides;
+        return String.format("Sandwich - %s %s%s\nMeat: %s%s, Cheese: %s%s\nToppings: %s\nSauces: %s\nSides: %s",
+                sizeChosen, breadType, (isToasted ? " (T)" : " "), meatSelected, (extraMeat ? " (extra)" : ""),
+                cheeseSelected, (extraCheese ? " (extra)" : ""),
+                String.join(", ", toppings), String.join(", ", sauces), sides);
     }
 }

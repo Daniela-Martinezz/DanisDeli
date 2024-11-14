@@ -1,11 +1,7 @@
 package com.pluralsight;
 
 public class Drink implements MenuItem {
-    //Attributes w/ enums
-    private DrinkSize size;
-    private DrinkFlavors flavor;
-
-    //enum for drink flavors:
+    //ENUMS:
     public enum DrinkFlavors{
         COCA_COLA, SPRITE, CRUSH, GINGER_ALE, GATORADE, ICED_TEA
     }
@@ -23,11 +19,14 @@ public class Drink implements MenuItem {
             return price;
         }
     }
+    //Attributes
+    private DrinkSize size;
+    private DrinkFlavors flavor;
+
     //Constructor w/ enums
     public Drink(DrinkSize size, DrinkFlavors flavor) {
         this.size = size;
         this.flavor = flavor;
-
     }
     //using method from DrinkSize
     @Override
@@ -41,6 +40,6 @@ public class Drink implements MenuItem {
     }
     @Override
     public String toString() {
-        return "Soda - Size: " + size + "," + " Flavor: : " + flavor;
+        return "SODA - Size: " + size + "," + " Flavor: " + flavor;
     }
 }
