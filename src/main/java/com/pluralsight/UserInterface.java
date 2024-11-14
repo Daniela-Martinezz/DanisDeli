@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class UserInterface {
     static Scanner scanner = new Scanner(System.in);
     static boolean exit = false;
-    private static List<String> toppingMenu = List.of( //what is list.of?
+    private static List<String> toppingMenu = List.of( //EXPLAIN: create list
             "LETTUCE", "PEPPERS", "ONIONS", "TOMATOES", "JALAPENOS", "CUCUMBERS",
             "PICKLES", "GUACAMOLE", "MUSHROOMS"
     );
@@ -113,7 +113,7 @@ public class UserInterface {
      //Step 4: select meat
      Sandwich.Meat meatSelected = null;
      while (meatSelected == null) {
-     System.out.println("\nSelect Meat: "); //TODO Depending on size, price changes
+     System.out.println("\nSelect Meat: ");
      System.out.println("-Steak\n-Ham\n-Salami\n-Roast Beef\n-Chicken\n-Bacon");
        try{
            meatSelected = Sandwich.Meat.valueOf(scanner.nextLine().toUpperCase().trim());
@@ -123,7 +123,7 @@ public class UserInterface {
      }
 
      //Step 5: extra meat?
-     System.out.println("Would you like to add extra meat (yes/no)");//TODO Extra meat fee, i wanna change menu to show the cost depending what size they choose
+     System.out.println("Would you like to add extra meat (yes/no)");
      boolean extraMeat = scanner.nextLine().equalsIgnoreCase("yes");
 
      //Step 6: Select cheese!
@@ -244,6 +244,7 @@ public class UserInterface {
             }
         }
 
+        //DRINK MENU:
         Drink.DrinkFlavors drinkFlavors = null;
         while (drinkFlavors == null) {
             System.out.println("Select drink flavor: ");
@@ -266,11 +267,12 @@ public class UserInterface {
     public static void checkout(List<MenuItem> orderItems) {
         System.out.println("Your order summary:");
         for (MenuItem item : orderItems) { //loop to show everything purchased
-            System.out.println(item + "  (" + String.format("$%.2f", item.getPrice()) +")");
-            System.out.println("----------------------------------------\n");
+            System.out.println(item + "  (" + String.format("$%.2f", item.getPrice()) +")" + "\n----------------------------------------");
+            //System.out.println("----------------------------------------");
 
         }
         System.out.println("Total: " + String.format("$%.2f", calculateTotal(orderItems)));
+        System.out.println("\nWould you like to confirm your order?");
         System.out.println("1) Confirm \n" + "2) Cancel \n");
         int input = scanner.nextInt();
         scanner.nextLine();
@@ -280,7 +282,7 @@ public class UserInterface {
                     ReceiptFileManager.customerReceipt(orderItems);
                     System.out.println("Order confirmed. Receipt saved!");
                     break;
-                case 0:
+                case 2:
                     orderItems.clear();
                     System.out.println("Order Cancelled.");
                     break;

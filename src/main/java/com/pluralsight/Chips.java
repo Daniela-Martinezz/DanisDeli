@@ -25,7 +25,7 @@ public class Chips implements MenuItem {
     }
     @Override
     public String toString() {
-        return "CHIPS - Flavor: " + chipsFlavor;
+        return "Chips:\n" + chipsFlavor;
     }
 }
 

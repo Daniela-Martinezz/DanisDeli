@@ -1,6 +1,5 @@
 package com.pluralsight;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Sandwich implements MenuItem {
@@ -28,7 +27,7 @@ public class Sandwich implements MenuItem {
         AMERICAN, PROVOLONE, CHEDDAR, SWISS
     }
     public enum Sides{
-        AU_JUS, SAUCE //TODO implement sides to sandwich
+        AU_JUS, SAUCE
     }
 
    //Attributes
@@ -55,31 +54,6 @@ public class Sandwich implements MenuItem {
         this.sides = sides;
         this.toppings = toppings;
         this.sauces = sauces;
-    }
-    public void addTopping(String topping) {
-        if (!toppings.contains(topping)) {
-            toppings.add(topping);
-        } else {
-            System.out.println("You have already added " + topping + "!");
-        }
-    }
-    public List<String> getToppings() {
-        return toppings;
-    }
-
-    public List<String> getSauces() {
-        return sauces;
-    }
-    //display toppings:
-    public void displayToppings() {
-        if (toppings.isEmpty()) {
-            System.out.println("Your sandwich has no toppings yet.");
-        } else {
-            System.out.println("Your sandwich has the following toppings: ");
-            for (String topping : toppings) {
-                System.out.println("- " + topping);
-            }
-        }
     }
     //Cost of a sandwich per size
     @Override
@@ -111,17 +85,15 @@ public class Sandwich implements MenuItem {
         }
         return baseCost;
     }
-
-
     @Override
     public String getDescription() {
-        return "Sandwich - " + sizeChosen + " " + breadType +
-        " with " + meatSelected + " and " + cheeseSelected; //new: need for this idk?
+        return "Sandwich: " + sizeChosen + ", " + breadType + (isToasted ? " (T)" : " ") +
+        " with " + meatSelected + (extraMeat ? " (+)" : " ") + ", " + cheeseSelected + (extraCheese ? " (+)" : " ") + ", " + String.join(", ", toppings) + ", " + String.join(", ", sauces);
     }
 
     @Override
     public String toString() {
-        return String.format("Sandwich - %s %s%s\nMeat: %s%s, Cheese: %s%s\nToppings: %s\nSauces: %s\nSides: %s",
+        return String.format("Sandwich:\n- %s, %s%s\n- %s%s, - %s%s\n- %s\n- %s\n- %s",
                 sizeChosen, breadType, (isToasted ? " (T)" : " "), meatSelected, (extraMeat ? " (extra)" : ""),
                 cheeseSelected, (extraCheese ? " (extra)" : ""),
                 String.join(", ", toppings), String.join(", ", sauces), sides);
