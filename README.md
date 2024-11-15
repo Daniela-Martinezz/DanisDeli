@@ -45,3 +45,5 @@ This Java-based Sandwich Shop application simulates a virtual sandwich store whe
 
 **Description**: The user's receipt from the demo.
 
+### UML Diagram
+![UML_Sandwich drawio](https://github.com/user-attachments/assets/946e4c49-b5e4-4a0c-a344-50ed8fd0881a)
