@@ -36,7 +36,7 @@ This Java-based Sandwich Shop application simulates a virtual sandwich store whe
 3. Confirm the order to generate a receipt. The receipt will display all items and the total price, saved in a readable format.
 
 
-### Demo: Ordering a Menu Items:
+### Demo: Ordering Menu Items:
 ![MakingAnOrder](https://github.com/user-attachments/assets/f267e0a9-08a4-478b-82f2-6dc06b9aed17)
 
 **Description**: The user can customize their sandwich fully. They are also able to order a drink and chips from the menu. The program confirms with the user and then creates a receipt or clears the selections. 
