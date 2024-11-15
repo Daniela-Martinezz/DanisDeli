@@ -2,7 +2,7 @@
 
 ## Overview
 
-This Java-based Sandwich Shop application simulates a virtual sandwich store where customers can customize sandwiches, drinks, and chips. The app allows users to build their own sandwiches with various bread types, sizes, meats, cheeses, toppings, and sauces, or select from pre-configured "Signature Sandwiches." It then calculates the order's total cost and generates a formatted receipt.
+This Java-based Sandwich Shop application simulates a virtual sandwich store where customers can customize sandwiches, drinks, and chips. The app allows users to build their own sandwiches with various bread types, sizes, meats, cheeses, toppings, and sauces. It then calculates the order's total cost and generates a formatted receipt.
 
 ## Features
 
